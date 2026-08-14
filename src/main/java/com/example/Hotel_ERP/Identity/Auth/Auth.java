@@ -49,7 +49,7 @@ public class Auth implements UserDetails {
         Auth auth = new Auth();
         auth.username = sighUp.username();
         auth.password = password;
-        auth.role = Roles.EMPLOYEE;
+        auth.role = Roles.ADMIN;
         auth.employee = employee;
         return auth;
     }
