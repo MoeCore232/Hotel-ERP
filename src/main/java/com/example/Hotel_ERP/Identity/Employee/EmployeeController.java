@@ -23,10 +23,22 @@ public class EmployeeController {
         return new ResponseEntity<>(new GlobalResponse<>(employees), HttpStatus.OK);
     }
 
+    @GetMapping("/get-employee-by-id/{employeeId}")
+    public ResponseEntity<GlobalResponse<Employee>> getEmployeeById (@PathVariable UUID employeeId) {
+        Employee employee = employeeService.getEmployeeById(employeeId);
+        return new ResponseEntity<>(new GlobalResponse<>(employee), HttpStatus.OK);
+    }
+
     @PostMapping("/create-employee")
     public ResponseEntity<GlobalResponse<String>> createEmployee (@RequestBody EmployeeDto.CreateEmployee createEmployee) {
         employeeService.createEmployee(createEmployee);
         return new ResponseEntity<>(new GlobalResponse<>("Employee created successful!"), HttpStatus.OK);
+    }
+
+    @PutMapping("/update-employee")
+    public ResponseEntity<GlobalResponse<String>> updateEmployee (@RequestBody EmployeeDto.UpdateEmployee updateEmployee) {
+        employeeService.updateEmployee(updateEmployee);
+        return new ResponseEntity<>(new GlobalResponse<>("Employee updated successfully!"), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-employee/{employeeId}")
@@ -34,5 +46,4 @@ public class EmployeeController {
         employeeService.deleteEmployee(employeeId);
         return new ResponseEntity<>(new GlobalResponse<>("Employee created successful"), HttpStatus.OK);
     }
-
 }

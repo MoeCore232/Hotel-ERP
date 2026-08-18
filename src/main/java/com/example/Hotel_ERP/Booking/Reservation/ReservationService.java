@@ -9,6 +9,7 @@ import com.example.Hotel_ERP.GuestManagment.Guest.GuestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -26,7 +27,14 @@ public class ReservationService {
     private RoomRepo roomRepo;
 
     public List<Reservation> getAllReservation () {
-        return reservationRepo.findAll();
+        List<Reservation> reservations = reservationRepo.findAll();
+        return reservations;
+    }
+
+    public Reservation getReservationById (UUID reservationId) {
+        Reservation findReservation = reservationRepo.findById(reservationId)
+                .orElseThrow(() -> CustomResponseException.idIsNotFound(reservationId));
+        return findReservation;
     }
 
     public void createReservation (ReservationDto.CreateReservation createReservation) {
@@ -44,6 +52,12 @@ public class ReservationService {
             throw CustomResponseException.capacityExceeded();
         }
 
+        BigDecimal roomPrice = findRoom.getPricePerNight();
+        BigDecimal sentAmount = createReservation.totalPrice();
+        if (roomPrice.compareTo(sentAmount) > 0) {
+            throw CustomResponseException.AmountEnteredInsufficient(roomPrice);
+        }
+
         LocalDate checkOut = createReservation.checkOutDate();
         LocalDate checkIn = createReservation.checkInDate();
 
@@ -56,10 +70,11 @@ public class ReservationService {
         reservationRepo.save(reservation);
     }
 
-    public void deleteReservation (UUID reservationId) {
-        Reservation findReservation = reservationRepo.findById(reservationId)
-                .orElseThrow(() -> CustomResponseException.idIsNotFound(reservationId));
-        reservationRepo.deleteById(findReservation.getId());
-    }
+    public void updateReservation (ReservationDto.UpdateReservation updateReservation) {
+        Reservation findReservation = reservationRepo.findById(updateReservation.reservationId())
+                .orElseThrow(() -> CustomResponseException.idIsNotFound(updateReservation.reservationId()));
 
+        Reservation reservation = Reservation.updateReservation(findReservation, updateReservation);
+        reservationRepo.save(reservation);
+    }
 }

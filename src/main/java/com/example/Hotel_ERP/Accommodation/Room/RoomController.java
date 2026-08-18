@@ -1,5 +1,7 @@
 package com.example.Hotel_ERP.Accommodation.Room;
 
+import com.example.Hotel_ERP.Booking.Reservation.ReservationDto;
+import com.example.Hotel_ERP.GuestManagment.Payment.Payment;
 import com.example.Hotel_ERP.Shared.ErrorHandling.GlobalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,12 @@ public class RoomController {
         return new ResponseEntity<>(new GlobalResponse<>(rooms), HttpStatus.OK);
     }
 
+    @GetMapping("/get-room-by-id/{roomId}")
+    public ResponseEntity<GlobalResponse<Room>> getRoomById (@PathVariable UUID roomId) {
+        Room room = roomService.getRoomById(roomId);
+        return new ResponseEntity<>(new GlobalResponse<>(room), HttpStatus.OK);
+    }
+
     @PostMapping("/create-room")
     public ResponseEntity<GlobalResponse<String>> createRoom (@RequestBody RoomDto.CreateRoom createRoom) {
         roomService.createRoom(createRoom);
@@ -35,4 +43,9 @@ public class RoomController {
         return new ResponseEntity<>(new GlobalResponse<>("Room deleted successful"), HttpStatus.OK);
     }
 
+    @PutMapping("/update-room")
+    public ResponseEntity<GlobalResponse<String>> updateRoom (@RequestBody RoomDto.UpdateRoom updateRoom) {
+        roomService.updateRoon(updateRoom);
+        return new ResponseEntity<>(new GlobalResponse<>("Room updated successfully!"), HttpStatus.OK);
+    }
 }

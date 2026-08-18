@@ -3,6 +3,7 @@ package com.example.Hotel_ERP.Identity.Employee;
 import com.example.Hotel_ERP.Shared.ErrorHandling.CustomResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +28,22 @@ public class EmployeeService {
         employeeRepo.save(employee);
     }
 
+    public Employee getEmployeeById (UUID employeeId) {
+        Employee findEmployee = employeeRepo.findById(employeeId)
+                .orElseThrow(() -> CustomResponseException.idIsNotFound(employeeId));
+        return findEmployee;
+    }
+
+    public void updateEmployee (@RequestBody EmployeeDto.UpdateEmployee updateEmployee) {
+        Employee findEmployee = employeeRepo.findById(updateEmployee.employeeId())
+                .orElseThrow(() -> CustomResponseException.idIsNotFound(updateEmployee.employeeId()));
+        Employee employee = Employee.updateEmployee(findEmployee, updateEmployee);
+        employeeRepo.save(employee);
+    }
+
     public void deleteEmployee (UUID employeeId) {
         Employee findEmployee = employeeRepo.findById(employeeId)
                 .orElseThrow(() -> CustomResponseException.idIsNotFound(employeeId));
         employeeRepo.deleteById(findEmployee.getId());
     }
-
 }

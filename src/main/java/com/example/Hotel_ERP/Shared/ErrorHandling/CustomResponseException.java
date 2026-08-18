@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Getter
@@ -46,7 +47,15 @@ public class CustomResponseException extends RuntimeException {
         return new CustomResponseException("Room is already reserved for the selected dates", 400);
     }
 
-    public static CustomResponseException BadCredentials(){
+    public static CustomResponseException BadCredentials (){
         return new CustomResponseException("Error: Bad credentials!", 401);
+    }
+
+    public static CustomResponseException PaymentAmountMustBeGreaterThanZero () {
+        return new CustomResponseException("Error: Payment amount must be greater than zero!", 401);
+    }
+
+    public static CustomResponseException AmountEnteredInsufficient (BigDecimal amount) {
+        return new CustomResponseException("Error: The amount entered is insufficient. The required amount is " + amount + " $", 401);
     }
 }

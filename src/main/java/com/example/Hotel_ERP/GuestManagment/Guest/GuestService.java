@@ -22,6 +22,12 @@ public class GuestService {
         guestRepo.save(guest);
     }
 
+    public Guest getGuestById (UUID guestId) {
+        Guest findGuest = guestRepo.findById(guestId)
+                .orElseThrow(() -> CustomResponseException.idIsNotFound(guestId));
+        return findGuest;
+    }
+
     public void deleteGuest (UUID guestId) {
         Guest findGuest = guestRepo.findById(guestId)
                 .orElseThrow(() -> CustomResponseException.idIsNotFound(guestId));

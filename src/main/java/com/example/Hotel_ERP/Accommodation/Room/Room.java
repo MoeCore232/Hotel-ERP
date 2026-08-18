@@ -57,6 +57,15 @@ public class Room {
         return room;
     }
 
+    public static Room updateRoom (Room room, RoomDto.UpdateRoom updateRoom) {
+        room.roomNumber = updateRoom.roomNumber();
+        room.pricePerNight = updateRoom.pricePerNight();
+        room.floor = updateRoom.floor();
+        room.caption = updateRoom.caption();
+        room.roomType = updateRoom.roomType();
+        return room;
+    }
+
     public void setRoomStatus (RoomStatus roomStatus) {
         this.roomStatus = roomStatus;
     }

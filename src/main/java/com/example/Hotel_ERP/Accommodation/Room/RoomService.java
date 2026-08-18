@@ -1,6 +1,7 @@
 package com.example.Hotel_ERP.Accommodation.Room;
 
 import com.example.Hotel_ERP.Accommodation.RoomType.RoomType;
+import com.example.Hotel_ERP.GuestManagment.Payment.Payment;
 import com.example.Hotel_ERP.Shared.ErrorHandling.CustomResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,12 @@ public class RoomService {
         return roomRepo.findAll();
     }
 
+    public Room getRoomById (UUID roomId) {
+        Room findRoom = roomRepo.findById(roomId)
+                .orElseThrow(() -> CustomResponseException.idIsNotFound(roomId));
+        return findRoom;
+    }
+
     public void createRoom (RoomDto.CreateRoom createRoom) {
         if (!RoomType.isValid(createRoom.roomType().name())) {
             throw CustomResponseException.publicError("Invalid room type", 400);
@@ -34,6 +41,14 @@ public class RoomService {
         Room findRoom = roomRepo.findById(roomId)
                 .orElseThrow(() -> CustomResponseException.idIsNotFound(roomId));
         roomRepo.deleteById(findRoom.getId());
+    }
+
+    public void updateRoon (RoomDto.UpdateRoom updateRoom) {
+        Room findRoom = roomRepo.findById(updateRoom.roomId())
+                .orElseThrow(() -> CustomResponseException.idIsNotFound(updateRoom.roomId()));
+
+        Room room = Room.updateRoom(findRoom, updateRoom);
+        roomRepo.save(room);
     }
 }
 

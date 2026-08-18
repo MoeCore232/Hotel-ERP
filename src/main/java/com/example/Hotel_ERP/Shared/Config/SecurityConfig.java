@@ -38,40 +38,55 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
-        httpSecurity.
-                cors(c -> c.disable())
+        httpSecurity
+                .cors(c -> c.disable())
                 .csrf(c -> c.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(
-                        //Employee
-                        "/api/employee/create-employee",
+                            //Employee
+                            "/api/employee/get-all-employees",
+                            "/api/employee/create-employee",
 
-                        //Auth
-                        "/api/auth/sigh-up",
-                        "/api/auth/sigh-in"
-                        ).permitAll()
-                        //Employee
-                        .requestMatchers(HttpMethod.GET, "/api/employee/get-all-employees").hasRole(ADMIN)
-                        .requestMatchers(HttpMethod.POST, "/api/employee/create-employee").hasAnyRole(ADMIN, EMPLOYEE)
+                            //Auth
+                            "/api/auth/sigh-up",
+                            "/api/auth/sigh-in"
+                            ).permitAll()
+                            // Employee
+                            .requestMatchers(HttpMethod.GET, "/api/employee/get-all-employees").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.GET, "/api/employee/get-employee-by-id/{employeeId}").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.POST, "/api/employee/create-employee").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.PUT, "/api/employee/update-employee").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.DELETE, "/api/employee/delete-employee/{employeeId}").hasRole(ADMIN)
 
-                        //Auth
-                        .requestMatchers(HttpMethod.GET, "/api/auth/get-all-auths").hasRole(ADMIN)
-                        .requestMatchers(HttpMethod.POST, "/api/auth/sigh-up").hasAnyRole(ADMIN, EMPLOYEE)
-                        .requestMatchers(HttpMethod.POST, "/api/auth/sigh-in").hasAnyRole(ADMIN, EMPLOYEE)
+                            // Auth
+                            .requestMatchers(HttpMethod.GET, "/api/auth/get-all-auths").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.POST, "/api/auth/sigh-up").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.POST, "/api/auth/sigh-in").hasAnyRole(ADMIN, EMPLOYEE)
 
-                        //Room
-                        .requestMatchers(HttpMethod.GET, "/api/room/get-all-rooms").hasRole(ADMIN)
-                        .requestMatchers(HttpMethod.POST, "/api/room/create-room").hasAnyRole(ADMIN, EMPLOYEE)
-                        .requestMatchers(HttpMethod.DELETE, "/api/room/delete-room/{roomId}").hasRole(ADMIN)
+                            // Room
+                            .requestMatchers(HttpMethod.GET, "/api/room/get-all-rooms").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.GET, "/api/room/get-room-by-id/{roomId}").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.POST, "/api/room/create-room").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.DELETE, "/api/room/delete-room/{roomId}").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.PUT, "/api/room/update-room").hasRole(ADMIN)
 
-                        //Guest
-                        .requestMatchers(HttpMethod.GET, "/api/guest/get-all-guests").hasRole(ADMIN)
-                        .requestMatchers(HttpMethod.POST, "/api/guest/create-guest").hasAnyRole(ADMIN, EMPLOYEE)
-                        .requestMatchers(HttpMethod.DELETE, "/api/guest/delete-guest/{guestId}").hasRole(ADMIN)
+                            // Guest
+                            .requestMatchers(HttpMethod.GET, "/api/guest/get-all-guests").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.GET, "/api/guest/get-guest-by-id/{guestId}").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.POST, "/api/guest/create-guest").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.DELETE, "/api/guest/delete-guest/{guestId}").hasRole(ADMIN)
 
-                        //Reservation
-                        .requestMatchers(HttpMethod.GET, "/api/reservation/get-all-reservations").hasRole(ADMIN)
-                        .requestMatchers(HttpMethod.POST, "/api/reservation/create-reservation").hasAnyRole(ADMIN, EMPLOYEE)
+                            // Reservation
+                            .requestMatchers(HttpMethod.GET, "/api/reservation/get-all-reservations").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.GET, "/api/reservation/get-reservation-by-id/{reservationId}").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.POST, "/api/reservation/create-reservation").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.PUT, "/api/reservation/update-reservation").hasRole(ADMIN)
+
+                            // Payment
+                            .requestMatchers(HttpMethod.GET, "/api/payment/get-all-payments").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.GET, "/api/payment/get-payment-by-id/{paymentId}").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.POST, "/api/payment/create-payment").hasAnyRole(ADMIN, EMPLOYEE)
+                            .requestMatchers(HttpMethod.PUT, "/api/payment/update-payment").hasRole(ADMIN)
                         .anyRequest()
                         .authenticated();
                 })

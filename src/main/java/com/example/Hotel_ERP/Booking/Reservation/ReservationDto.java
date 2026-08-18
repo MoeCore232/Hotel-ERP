@@ -9,12 +9,17 @@ public class ReservationDto {
     public record CreateReservation (
             UUID guestId,
             UUID roomId,
-
             LocalDate checkInDate,
             LocalDate checkOutDate,
-
             int numberOfGuest,
             BigDecimal totalPrice
     ) {}
 
+    public record UpdateReservation (
+            UUID reservationId,
+            LocalDate checkInDate,
+            LocalDate checkOutDate,
+            int numberOfGuest,
+            BigDecimal totalPrice
+    ) {}
 }

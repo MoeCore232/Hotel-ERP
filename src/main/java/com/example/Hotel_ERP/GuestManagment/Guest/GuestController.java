@@ -1,5 +1,6 @@
 package com.example.Hotel_ERP.GuestManagment.Guest;
 
+import com.example.Hotel_ERP.GuestManagment.Payment.Payment;
 import com.example.Hotel_ERP.Shared.ErrorHandling.GlobalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,12 @@ public class GuestController {
     public ResponseEntity<GlobalResponse<List<Guest>>> getAllGuests () {
         List<Guest> guests = guestService.getAllGuests();
         return new ResponseEntity<>(new GlobalResponse<>(guests), HttpStatus.OK);
+    }
+
+    @GetMapping("/get-guest-by-id/{guestId}")
+    public ResponseEntity<GlobalResponse<Guest>> getGuestById (@PathVariable UUID guestId) {
+        Guest guest = guestService.getGuestById(guestId);
+        return new ResponseEntity<>(new GlobalResponse<>(guest), HttpStatus.OK);
     }
 
     @PostMapping("/create-guest")

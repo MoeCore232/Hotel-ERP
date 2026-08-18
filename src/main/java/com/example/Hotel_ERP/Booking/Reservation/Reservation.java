@@ -3,6 +3,7 @@ package com.example.Hotel_ERP.Booking.Reservation;
 import com.example.Hotel_ERP.Accommodation.Room.Room;
 import com.example.Hotel_ERP.Booking.ReservationStatus.ReservationStatus;
 import com.example.Hotel_ERP.GuestManagment.Guest.Guest;
+import com.example.Hotel_ERP.Shared.ErrorHandling.CustomResponseException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -66,6 +67,19 @@ public class Reservation {
         return reservation;
     }
 
+    public static Reservation updateReservation (Reservation reservation, ReservationDto.UpdateReservation updateReservation) {
+        reservation.checkInDate = updateReservation.checkInDate();
+        reservation.checkOutDate = updateReservation.checkOutDate();
+        reservation.numberOfGuest = updateReservation.numberOfGuest();
+        if (updateReservation.totalPrice().compareTo(reservation.totalPrice) < 0) {
+            throw CustomResponseException.AmountEnteredInsufficient(reservation.totalPrice);
+        }
+        if (updateReservation.totalPrice().compareTo(BigDecimal.ZERO) <= 0) {
+            throw CustomResponseException.PaymentAmountMustBeGreaterThanZero();
+        }
+        return reservation;
+    }
+
     public void checkIn () {
         this.reservationStatus = ReservationStatus.CHECK_IN;
     }
@@ -77,5 +91,4 @@ public class Reservation {
     public void cancel () {
         this.reservationStatus = ReservationStatus.CANCELED;
     }
-
 }
