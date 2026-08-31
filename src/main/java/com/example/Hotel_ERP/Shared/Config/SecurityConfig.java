@@ -87,6 +87,18 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.GET, "/api/payment/get-payment-by-id/{paymentId}").hasAnyRole(ADMIN, EMPLOYEE)
                             .requestMatchers(HttpMethod.POST, "/api/payment/create-payment").hasAnyRole(ADMIN, EMPLOYEE)
                             .requestMatchers(HttpMethod.PUT, "/api/payment/update-payment").hasRole(ADMIN)
+
+                            // Maintenance
+                            .requestMatchers(HttpMethod.GET, "/api/maintenance/get-all-maintenances").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.GET, "/api/maintenance/get-maintenance-by-id/{maintenanceId}").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.POST, "/api/maintenance/create-maintenance").hasAnyRole(ADMIN)
+                            .requestMatchers(HttpMethod.DELETE, "/api/maintenance/delete-maintenance/{maintenanceId}").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.PUT, "/api/maintenance/update-maintenance").hasRole(ADMIN)
+
+                            // Service-Order
+                            .requestMatchers(HttpMethod.GET, "/api/service-order/get-all-service-orders").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.GET, "/api/service-order/get-service-order-by-id/{serviceOrderId}").hasRole(ADMIN)
+                            .requestMatchers(HttpMethod.POST, "/api/service-order/create-service-order").hasAnyRole(ADMIN)
                         .anyRequest()
                         .authenticated();
                 })

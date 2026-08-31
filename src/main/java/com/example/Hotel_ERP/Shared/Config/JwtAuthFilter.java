@@ -20,7 +20,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtHelper jwtHelper;
     private final UserDetailsService userDetailsService;
 
-    public JwtAuthFilter(JwtHelper jwtHelper, UserDetailsService userDetailsService){
+    public JwtAuthFilter (JwtHelper jwtHelper, UserDetailsService userDetailsService) {
         this.jwtHelper = jwtHelper;
         this.userDetailsService = userDetailsService;
     }
@@ -32,12 +32,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
         String token = null;
 
-        if(authHeader != null && authHeader.startsWith("Bearer ")){
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
         }
         System.out.println("auth header token start with Bearer: " + token);
 
-        if(token == null){
+        if (token == null) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -45,12 +45,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String username = jwtHelper.extraUsername(token);
 
-        if(username != null){
+        if (username != null) {
             System.out.println("username: " + username);
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             boolean isTokenValid = jwtHelper.isTokenValid(token, userDetails);
 
-            if(isTokenValid){
+            if (isTokenValid) {
                 System.out.println("is valid: " + isTokenValid);
                 var authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()

@@ -1,6 +1,7 @@
 package com.example.Hotel_ERP.GuestManagment.Payment;
 
 import com.example.Hotel_ERP.Shared.ErrorHandling.GlobalResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +31,13 @@ public class PaymentController {
     }
 
     @PostMapping("/create-payment")
-    public ResponseEntity<GlobalResponse<String>> createPayment (@RequestBody PaymentDto.CreatePayment createPayment) {
+    public ResponseEntity<GlobalResponse<String>> createPayment (@Valid @RequestBody PaymentDto.CreatePayment createPayment) {
         paymentService.createPayment(createPayment);
         return new ResponseEntity<>(new GlobalResponse<>("Payment created successfully!"), HttpStatus.OK);
     }
 
     @PutMapping("/update-payment")
-    public ResponseEntity<GlobalResponse<String>> updatePayment (@RequestBody PaymentDto.UpdatePayment updatePayment) {
+    public ResponseEntity<GlobalResponse<String>> updatePayment (@Valid @RequestBody PaymentDto.UpdatePayment updatePayment) {
         paymentService.updatePayment(updatePayment);
         return new ResponseEntity<>(new GlobalResponse<>("Payment updated successfully!"), HttpStatus.OK);
     }

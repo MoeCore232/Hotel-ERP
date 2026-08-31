@@ -49,6 +49,14 @@
         </dependency>
         <!-- //Spring Boot Dependencies// -->
 
+        <!-- Spring boot starter validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        <!-- //Spring boot starter validation// -->
+
         <!-- Spring Boot starter data jpa / PostgresSQL Driver -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

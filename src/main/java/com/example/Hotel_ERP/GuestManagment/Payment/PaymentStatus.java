@@ -1,4 +1,4 @@
-package com.example.Hotel_ERP.GuestManagment.PaymentStatus;
+package com.example.Hotel_ERP.GuestManagment.Payment;
 
 public enum PaymentStatus {
     PENDING,

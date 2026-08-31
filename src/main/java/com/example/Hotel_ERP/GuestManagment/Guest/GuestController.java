@@ -1,7 +1,7 @@
 package com.example.Hotel_ERP.GuestManagment.Guest;
 
-import com.example.Hotel_ERP.GuestManagment.Payment.Payment;
 import com.example.Hotel_ERP.Shared.ErrorHandling.GlobalResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,7 @@ public class GuestController {
     }
 
     @PostMapping("/create-guest")
-    public ResponseEntity<GlobalResponse<String >> createGuest (@RequestBody GuestDto.CreateGuest createGuest) {
+    public ResponseEntity<GlobalResponse<String >> createGuest (@Valid @RequestBody GuestDto.CreateGuest createGuest) {
         guestService.createGuest(createGuest);
         return new ResponseEntity<>(new GlobalResponse<>("Guest created successful!"), HttpStatus.OK);
     }

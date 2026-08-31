@@ -1,6 +1,7 @@
 package com.example.Hotel_ERP.Booking.Reservation;
 
 import com.example.Hotel_ERP.Shared.ErrorHandling.GlobalResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +31,13 @@ public class ReservationController {
    }
 
    @PostMapping("/create-reservation")
-    public ResponseEntity<GlobalResponse<String>> createReservation (@RequestBody ReservationDto.CreateReservation createReservation) {
+    public ResponseEntity<GlobalResponse<String>> createReservation (@Valid @RequestBody ReservationDto.CreateReservation createReservation) {
        reservationService.createReservation(createReservation);
        return new ResponseEntity<>(new GlobalResponse<>("Reservation created successful!"), HttpStatus.OK);
    }
 
    @PutMapping("/update-reservation")
-    public ResponseEntity<GlobalResponse<String>> updateReservation (@RequestBody ReservationDto.UpdateReservation updateReservation) {
+    public ResponseEntity<GlobalResponse<String>> updateReservation (@Valid @RequestBody ReservationDto.UpdateReservation updateReservation) {
        reservationService.updateReservation(updateReservation);
        return new ResponseEntity<>(new GlobalResponse<>("Reservation updated successfully"), HttpStatus.OK);
    }

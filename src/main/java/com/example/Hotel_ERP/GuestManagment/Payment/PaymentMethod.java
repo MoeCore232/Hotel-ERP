@@ -1,4 +1,4 @@
-package com.example.Hotel_ERP.GuestManagment.PaymentMethod;
+package com.example.Hotel_ERP.GuestManagment.Payment;
 
 public enum PaymentMethod {
     CASH,

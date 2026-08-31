@@ -1,6 +1,7 @@
 package com.example.Hotel_ERP.Identity.Employee;
 
 import com.example.Hotel_ERP.Shared.ErrorHandling.GlobalResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +31,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/create-employee")
-    public ResponseEntity<GlobalResponse<String>> createEmployee (@RequestBody EmployeeDto.CreateEmployee createEmployee) {
+    public ResponseEntity<GlobalResponse<String>> createEmployee (@Valid @RequestBody EmployeeDto.CreateEmployee createEmployee) {
         employeeService.createEmployee(createEmployee);
         return new ResponseEntity<>(new GlobalResponse<>("Employee created successful!"), HttpStatus.OK);
     }
 
     @PutMapping("/update-employee")
-    public ResponseEntity<GlobalResponse<String>> updateEmployee (@RequestBody EmployeeDto.UpdateEmployee updateEmployee) {
+    public ResponseEntity<GlobalResponse<String>> updateEmployee (@Valid @RequestBody EmployeeDto.UpdateEmployee updateEmployee) {
         employeeService.updateEmployee(updateEmployee);
         return new ResponseEntity<>(new GlobalResponse<>("Employee updated successfully!"), HttpStatus.OK);
     }

@@ -1,8 +1,6 @@
 package com.example.Hotel_ERP.GuestManagment.Payment;
 
 import com.example.Hotel_ERP.Booking.Reservation.Reservation;
-import com.example.Hotel_ERP.GuestManagment.PaymentMethod.PaymentMethod;
-import com.example.Hotel_ERP.GuestManagment.PaymentStatus.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
